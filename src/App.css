@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Graduate&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ga+Maamli&display=swap');
+
+.navbar-brand .img-fluid {
+  height: 40px;
+  width: auto;
+  margin-right: 20px;
+}
+
+.navbar-brand {
+  color: white !important;
+  text-decoration: none;
+}
+
+.nav-link {
+  color: white !important;
+  text-decoration: none;
+}
+
+a.add-to-cart-icon.nav-link {
+  background-color: rgb(226, 57, 94) !important;
+  margin: 0 20px;
+  padding: 5px 20px;
+  border-radius: 5px;
+}
+
+svg.navbar-cart{
+  font-size: 1.5em;
+  /* margin: 0 10px; */
+}
+
+
+/* HomePage */
+
+.hero-section {
+  text-align: center;
+}
+
+.hero-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.hero-grid-heading.col-md-6{
+  /* background: linear-gradient(90deg, #6a11cb, #6529fc, #4229fc); */
+  background-color: papayawhip;
+  height: 80vh;
+  padding: 100px 40px ;
+}
+
+.hero-grid h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  background-clip: text;
+  background: linear-gradient(90deg, #ff0000, #d23636, #941c09); /* Red shades */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-grid p {
+  font-size: 1.1em;
+  color: #555;
+  line-height: 1.2em;
+  margin: 20px 0;
+}
+
+.hero-grid button {
+  font-size: 1.3em;
+  padding: 10px 40px;
+  background-color: #d23636;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+.hero-grid button a {
+  text-decoration: none;
+  color: white;
+}
+
+.hero-grid img {
+  max-width: 100%;
+  height: 80vh;
+  /* border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out; */
+}
+
+/* .hero-grid img:hover {
+  transform: scale(1.05);
+} */
+
+
+/* Products */
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 20px !important;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.products .title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.products h2 {
+  font-family: "Graduate", serif;
+  text-align: center;
+  font-size: 40px;
+  color: rgb(89, 0, 255);
+}
+
+.products .img-fluid {
+  height: 40px;
+  width: auto;
+  margin: 0 20px;
+}
+
+.products .select-category {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.select-category .form-label {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+#categorySelect {
+  height: 40px !important;
+}
+
+.products .card-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.products img {
+  height: 300px;
+  width: auto;
+  /* object-fit: contain; */
+  margin: 10px;
+}
+
+.product-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.product-price {
+  color: crimson;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+
+/* Details Container */
+
+.details-container img{
+  max-height: 500px;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.product-details {
+  padding: 20px;
+}
+
+.ratings-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.ratings-container p {
+  margin-bottom: 0px;
+}
+
+.product-details .price {
+  color: rgb(46, 60, 252);
+}
+
+.details-container .stock {
+  font-size: 1.2em;
+}
+
+.details-container .stock .stock-no {
+  color: crimson;
+  font-weight: bold;
+}
+
+.product-data {
+  max-width: 500px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  max-width: 500px;
+}
+
+.button-container button {
+  border-radius: 25px;
+  padding: 10px 40px;
+}
+
+
+/* Cart Section */
+
+.cart-price {
+  background-color: bisque;
+}
+
+
+/* Login & Register */
+
+.form-container { 
+  padding: 2em;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  /* border: 1px solid black; */
+  /* box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0 5px 10px rgba(148, 0, 211, 0.1);
+  background-color: white;
+}
+
+.form-container h3 {
+  color: darkviolet;
+  font-family: "Ga Maamli", sans-serif;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.form-container button {
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 1.2em;
+  width: 50%;
+  border-radius: 40px;
+  background-color: darkviolet;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease-out;
+}
+
+.form-container button:hover {
+  background-color: blueviolet;
+}
+
+.form-container a {
+  color: darkviolet;
+  text-decoration: none;
+}
+
+.form-container .form-control:focus {
+  border-color: rgba(179, 0, 255, 0.2) !important; 
+  box-shadow: 0 0 10px rgba(179, 0, 255, 0.2) !important; 
+  outline: none !important;
+}
