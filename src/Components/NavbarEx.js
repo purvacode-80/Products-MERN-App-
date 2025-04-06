@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Container, Navbar, Nav, NavDropdown, Button, Modal, Form, Row, Col,Image } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, Modal, Form, Row, Col, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import cart from './Images/cart.png'
+import cart from './Images/cart.png';
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { toast, ToastContainer } from 'react-toastify';
 
-function NavbarEx({cartCount}) {
+function NavbarEx({ cartCount }) {
   const navigate = useNavigate();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [show, setShow] = useState(false);
-  const [products, setProducts] = useState([]);  // Store products in state
+  const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({
     name: "",
     category: "",
@@ -21,24 +24,26 @@ function NavbarEx({cartCount}) {
     image: ""
   });
 
-  // ✅ Fetch products from API when component mounts & after product is added
+  useEffect(() => {
+    // Check login status on mount
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+    fetchProducts();
+  }, []);
+
   const fetchProducts = () => {
     axios.get("http://localhost:8005/products/all")
-      .then(response => {
-        setProducts(response.data);
-      })
-      .catch(error => {
-        console.error("Error fetching products:", error);
-      });
+      .then(response => setProducts(response.data))
+      .catch(error => console.error("Error fetching products:", error));
   };
-
-  useEffect(() => {
-    fetchProducts(); // ✅ Fetch products on initial load
-  }, []);
 
   const handleClose = () => {
     setShow(false);
-    setNewProduct({ // Reset form data after closing modal
+    setNewProduct({
       name: "",
       category: "",
       price: "",
@@ -48,7 +53,7 @@ function NavbarEx({cartCount}) {
       brand: "",
       image: ""
     });
-    fetchProducts(); // ✅ Reload products when closing the modal
+    fetchProducts();
   };
 
   const handleShow = () => setShow(true);
@@ -57,52 +62,64 @@ function NavbarEx({cartCount}) {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
 
-  // Handle adding a new product
   const handleAddProduct = () => {
     axios.post("http://localhost:8005/products/add", newProduct)
       .then(response => {
-        console.log("Product added:", response.data);
-        alert("Product added successfully!");
-        fetchProducts(); //  Reload products after adding
-        handleClose();   // Close modal and reset form
+        toast.success("Product added successfully!", { autoClose: 3000 });
+        fetchProducts();
+        handleClose();
       })
       .catch(error => {
         console.error("Error adding product:", error);
-        alert("Failed to add product!");
+        toast.error("Failed to add product. Please try again.", { autoClose: 3000 });
       });
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    setIsLoggedIn(false);
     navigate('/login');
   };
 
   return (
     <>
-      <Navbar expand="lg" className="mb-4" bg="dark">
+      <Navbar expand="lg" className="mb-4" bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand as={Link} to='/'>         
-            <Image src={cart} fluid/>
-            Products
+          <Navbar.Brand as={Link} to='/'>
+            <Image src={cart} fluid /> Products
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
-            {/* <Nav className="me-auto">
-              <NavDropdown title="Category" id="basic-nav-dropdown">
-                <NavDropdown.Item as={Link} to="/category/">Get</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/post">Post</NavDropdown.Item>
-              </NavDropdown>
-            </Nav> */}
-            <Nav.Link><Button variant="info" onClick={handleShow}>Add Product</Button></Nav.Link>
+
+            {/* Add Product Button - Visible only if logged in */}
+            {isLoggedIn && (
+              <Nav.Link><Button variant="info" onClick={handleShow}>Add Product</Button></Nav.Link>
+            )}
+
+            {/* Cart Icon */}
+            {isLoggedIn && (
+              <Nav.Link as={Link} to="/cart" className='add-to-cart-icon'>
+                <AiOutlineShoppingCart className='navbar-cart' /> {cartCount}
+              </Nav.Link>
+            )}
+
+            {/* Show Login only if not logged in */}
+            {!isLoggedIn && (
+              <Button variant="secondary mx-2" onClick={() => navigate("/login")}>Login</Button>
+            )}
+
+            {/* Show Logout only if logged in */}
+            {isLoggedIn && (
+              <Button variant="secondary mx-2" onClick={handleLogout}>Logout</Button>
+            )}
+
           </Navbar.Collapse>
-          <Nav.Link as={Link} to="/cart" className='add-to-cart-icon'> <AiOutlineShoppingCart className='navbar-cart'/> {cartCount} </Nav.Link>
-          <Button variant="secondary mx-2" onClick={() => {navigate("/login")}}> Login </Button>
-          <Button variant="secondary mx-2" onClick={handleLogout}> Logout </Button>
         </Container>
       </Navbar>
 
-      {/* Modal for Adding a Product */}
+      {/* Add Product Modal */}
       <Modal show={show} onHide={handleClose}>
+        <ToastContainer />
         <Modal.Header closeButton>
           <Modal.Title>Add a New Product</Modal.Title>
         </Modal.Header>
@@ -110,7 +127,9 @@ function NavbarEx({cartCount}) {
           <Form>
             <Form.Group className="mb-3" as={Row}>
               <Form.Label column md="3"> Name: </Form.Label>
-              <Col md="9"> <Form.Control type="text" name="name" placeholder="Enter name" value={newProduct.name} onChange={handleChange} required /> </Col>
+              <Col md="9">
+                <Form.Control type="text" name="name" placeholder="Enter name" value={newProduct.name} onChange={handleChange} required />
+              </Col>
             </Form.Group>
             <Form.Group className="mb-3" as={Row}>
               <Form.Label column md="3"> Category: </Form.Label>
@@ -140,7 +159,7 @@ function NavbarEx({cartCount}) {
               <Form.Label column md="3"> Image URL: </Form.Label>
               <Col md="9"> <Form.Control type="text" name="image" placeholder="Enter image URL" value={newProduct.image} onChange={handleChange} required /> </Col>
             </Form.Group>
-          </Form>
+            </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={handleClose}>Close</Button>

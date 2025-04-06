@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Login() {
   const [user, setUser] = useState({
@@ -19,16 +20,17 @@ function Login() {
         const token = response.data.token; // Extract token from response
         console.log("Token : ", token); // Print token in console
         localStorage.setItem("token", token); // Store token in localStorage
-        alert("Login Successful...!"); // Only shows on success
+        toast.success("Login Successful...! Ready to explore the brands...", { autoClose: 3000 , onClose: () => window.location.href = "/home"}); // Redirect to home page after 3 seconds
       })
       .catch((err) => {
         console.error("Invalid Credentials:", err);
-        alert("Invalid Credentials"); // Only shows on failure
+        toast.error("Invalid Credentials...! Please try again", { autoClose: 3000 }); // Show error message
       });
   };
 
   return (
     <div className="login">
+      <ToastContainer />
       <div className='login-container form-container my-5'>
         <h3> Login </h3>
         <Form onSubmit={handleSubmit}>

@@ -8,7 +8,7 @@ function CartPage({ cart, removeFromCart }) {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
+    // console.log(cart)
     if (!token) {
       setIsLoggedIn(false); // User is not logged in
     }
@@ -20,8 +20,13 @@ function CartPage({ cart, removeFromCart }) {
     totalPrice += product.price;
   });
 
+  let totalItems = 0;
+  cart.forEach(product => {
+    totalItems += 1;
+  });
+
   return (
-    <Container className="products">
+    <Container className="cart-products">
     {/* Show message if user is not logged in */}
       {!isLoggedIn ? (
         <div className="text-center">
@@ -48,8 +53,9 @@ function CartPage({ cart, removeFromCart }) {
           ))}
           <Col md={3} sm={6}>
             <div className="cart-price">
-              <h3> Total Price: <span className="text-success">${totalPrice.toFixed(2)}</span></h3>
-              <Button variant="warning"> Buy Now </Button>
+              <h4> Total Items : {totalItems} </h4>
+              <h3 className="heading"> Total Price : <span className="price">${totalPrice.toFixed(2)}</span></h3>
+              <center> <button> Buy Now </button> </center>
             </div>
           </Col>
         </Row>

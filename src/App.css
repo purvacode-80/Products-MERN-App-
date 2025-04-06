@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Graduate&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ga+Maamli&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap');
 
 .navbar-brand .img-fluid {
   height: 40px;
@@ -63,7 +65,7 @@ div.hero-grid-heading.col-md-6{
   font-size: 1.1em;
   color: #555;
   line-height: 1.2em;
-  margin: 20px 0;
+  margin: 30px 0;
 }
 
 .hero-grid button {
@@ -216,9 +218,36 @@ div.hero-grid-heading.col-md-6{
 /* Cart Section */
 
 .cart-price {
+  padding: 2em;
   background-color: bisque;
+  margin-top: 20px;
+  border-radius: 20px;
 }
 
+.cart-price .heading {
+  font-size: 1.5em;
+  font-family: "Permanent Marker", cursive;
+}
+
+.cart-price .price {
+  font-family: "Karla", sans-serif;
+  color: crimson;
+  font-weight: 700;
+}
+
+.cart-price button {
+  border-radius: 25px;
+  padding: 10px 40px;
+  background-color: #e02f2f;
+  color: white;
+  margin-top: 20px;
+  transition: background-color 0.3s ease-in-out;
+  border: none;
+}
+
+.cart-price button:hover {
+  background-color: #c02f2f;
+}
 
 /* Login & Register */
 
